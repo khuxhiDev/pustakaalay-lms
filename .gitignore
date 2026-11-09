@@ -1,0 +1,14 @@
+node_modules/
+.env
+.env.local
+frontend/dist/
+backend/coverage/
+*.log
+.DS_Store
+
+# Keep all private sample-account records out of GitHub.
+PRIVATE_*
+*_Credentials*.txt
+
+prepare-overdue-qa-loan.mjs
+verify-reminder-workflow.mjs

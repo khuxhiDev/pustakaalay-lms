@@ -1,0 +1,17 @@
+import React from 'react';import {BookOpen,Search,Loader2,ChevronLeft,ChevronRight,X,AlertTriangle} from 'lucide-react';
+export function Brand({compact=false}){return <div className="brand"><div className="brand-symbol"><BookOpen size={22} strokeWidth={2.2}/></div>{!compact&&<div><strong>Pustakaalay<span className="brand-dot">.</span></strong><small>LIBRARY MANAGEMENT</small></div>}</div>}
+export function Pill({children,tone='neutral'}){return <span className={`pill ${tone}`}>{children}</span>}
+export function Button({children,variant='primary',className='',loading=false,...props}){return <button className={`btn btn-${variant} ${className}`} disabled={props.disabled||loading} {...props}>{loading?<Loader2 size={16} className="spin"/>:null}{children}</button>}
+export function Field({label,children,hint}){return <label className="field"><span className="field-label">{label}</span>{children}{hint&&<small className="field-hint">{hint}</small>}</label>}
+export function SectionTitle({eyebrow,title,subtitle,actions}){return <div className="section-title"><div>{eyebrow&&<div className="eyebrow">{eyebrow}</div>}<h1>{title}</h1>{subtitle&&<p>{subtitle}</p>}</div>{actions&&<div className="title-actions">{actions}</div>}</div>}
+export function Empty({title='Nothing here yet',description='Try adjusting your filters or adding a new record.',icon:Icon=BookOpen,action}){return <div className="empty"><div className="empty-icon"><Icon size={27}/></div><h3>{title}</h3><p>{description}</p>{action}</div>}
+export function Loading(){return <div className="loading"><Loader2 size={30} className="spin"/><p>Loading your library...</p></div>}
+export function ErrorState({message,retry}){return <div className="empty"><AlertTriangle size={28}/><h3>Couldn't load data</h3><p>{message}</p>{retry&&<Button variant="outline" onClick={retry}>Try again</Button>}</div>}
+export function PageNav({page,pages,onChange}){if(pages<=1)return null;return <div className="pagination"><Button variant="outline" disabled={page<=1} onClick={()=>onChange(page-1)}><ChevronLeft size={16}/> Previous</Button><span>Page {page} of {pages}</span><Button variant="outline" disabled={page>=pages} onClick={()=>onChange(page+1)}>Next <ChevronRight size={16}/></Button></div>}
+export function Modal({title,description,onClose,children,wide=false}){return <div className="modal-backdrop" onMouseDown={e=>{if(e.target===e.currentTarget)onClose()}}><div className={`modal ${wide?'wide':''}`} role="dialog" aria-modal="true"><div className="modal-head"><div><h2>{title}</h2>{description&&<p>{description}</p>}</div><button className="icon-btn" onClick={onClose} aria-label="Close"><X size={20}/></button></div><div className="modal-body">{children}</div></div></div>}
+export function DateText({value}){if(!value)return '—';return new Date(value).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});}
+export function BookCover({book,size='md'}){return <div className={`book-cover cover-${size} cover-tone-${(book?.title?.length||0)%6}`}>
+  {book?.coverImage?<img src={book.coverImage} alt={`${book.title} cover`} onError={e=>{e.currentTarget.style.display='none'}}/>:null}
+  <div className="cover-decoration"><span className="cover-line"/><BookOpen size={size==='sm'?18:30} strokeWidth={1.3}/><div className="cover-name">{book?.title||'Untitled'}</div><span className="cover-author">{book?.author||'Pustakaalay'}</span><span className="cover-line"/></div>
+</div>}
+export const money=n=>`₹${Number(n||0).toLocaleString('en-IN')}`;
